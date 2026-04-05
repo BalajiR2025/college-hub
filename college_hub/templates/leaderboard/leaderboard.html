@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h4 class="fw-bold mb-4">Leaderboard</h4>
+
+<div class="card border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+    <table class="table mb-0">
+        <thead style="background: linear-gradient(135deg, #1a1a2e, #16213e); color: white;">
+            <tr>
+                <th class="py-3 ps-4">#</th>
+                <th class="py-3">Student</th>
+                <th class="py-3">Department</th>
+                <th class="py-3 text-end pe-4">Points</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for student in top_students %}
+        <tr style="{% if forloop.counter <= 3 %}background: #fffbf0;{% endif %}">
+            <td class="ps-4 py-3 fw-bold">
+                {% if forloop.counter == 1 %}🥇
+                {% elif forloop.counter == 2 %}🥈
+                {% elif forloop.counter == 3 %}🥉
+                {% else %}{{ forloop.counter }}
+                {% endif %}
+            </td>
+            <td class="py-3">
+                <div class="fw-semibold">{{ student.get_full_name|default:student.username }}</div>
+                <div class="small text-muted">{{ student.email }}</div>
+            </td>
+            <td class="py-3"><span class="badge bg-light text-dark">{{ student.department }}</span></td>
+            <td class="py-3 text-end pe-4">
+                <span class="fw-bold text-success">{{ student.points }} pts</span>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-center py-4 text-muted">No students yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

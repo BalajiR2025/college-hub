@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Dashboard</h4>
+    {% if exam_mode %}
+        <a href="?" class="exit-exam-btn text-decoration-none">Exit Exam Mode</a>
+    {% else %}
+        <a href="?exam=1" class="exam-btn text-decoration-none">Exam Mode</a>
+    {% endif %}
+</div>
+
+<!-- Stats Row -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="stat-card" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+            <div class="number text-white">{{ request.user.points }}</div>
+            <div class="text-white opacity-75 small">Your Points</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+            <div class="number text-white">{{ my_uploads }}</div>
+            <div class="text-white opacity-75 small">Uploads</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+            <div class="number text-white">{{ my_downloads }}</div>
+            <div class="text-white opacity-75 small">Downloads Received</div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Row -->
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="section-title">Recent Resources</div>
+        {% for r in recent %}
+        <div class="resource-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <a href="/resources/{{ r.pk }}/" class="fw-semibold text-decoration-none text-dark">{{ r.title }}</a>
+                    <div class="mt-1">
+                        <span class="badge-type badge-{{ r.type }}">{{ r.get_type_display }}</span>
+                        {% if r.is_important %}
+                        <span class="badge-type badge-important ms-1">Important</span>
+                        {% endif %}
+                        <span class="text-muted small ms-2">{{ r.subject }}</span>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <div class="small text-muted">{{ r.downloads }} downloads</div>
+                    <div class="small text-warning">{{ r.avg_rating|floatformat:1 }} ★</div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-4 text-muted">
+            <p>No resources yet. Add some from the admin panel.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-md-4">
+        <div class="sidebar-title">Open Requests</div>
+        {% for req in open_requests %}
+        <div class="request-card">
+            <div class="small fw-semibold text-primary">{{ req.subject }}</div>
+            <div class="small text-muted mt-1">{{ req.description|truncatechars:70 }}</div>
+        </div>
+        {% empty %}
+        <p class="text-muted small">No open requests.</p>
+        {% endfor %}
+        <a href="/requests/new/" class="btn btn-sm w-100 mt-2"
+            style="border: 1px dashed #ccc; color: #888; border-radius: 8px;">
+            + New Request
+        </a>
+    </div>
+</div>
+
+{% endblock %}

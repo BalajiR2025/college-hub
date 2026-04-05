@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <h4>{{ resource.title }}</h4>
+    <p>{{ resource.subject }} | {{ resource.get_type_display }} | {{ resource.downloads }} downloads</p>
+    <a href="{% url 'download' resource.pk %}" class="btn btn-primary">Download</a>
+    <form method="post" action="{% url 'toggle_important' resource.pk %}" class="d-inline ms-2">
+      {% csrf_token %}
+      <button class="btn btn-outline-warning">
+        {% if resource.is_important %}Unmark Important{% else %}Mark Important{% endif %}
+      </button>
+    </form>
+    <hr>
+    <h6>Rate this resource</h6>
+    <form method="post" action="{% url 'rate' resource.pk %}">
+      {% csrf_token %}
+      {% for i in '12345' %}
+      <input type="radio" name="score" value="{{ i }}" {% if user_rating.score == i|add:0 %}checked{% endif %}> {{ i }}
+      {% endfor %}
+      <button type="submit" class="btn btn-sm btn-outline-primary ms-2">Submit Rating</button>
+    </form>
+    <hr>
+    <h6>Report this resource</h6>
+    <form method="post" action="{% url 'report' resource.pk %}">
+      {% csrf_token %}
+      <textarea name="reason" class="form-control mb-2" rows="2" placeholder="Reason..."></textarea>
+      <button type="submit" class="btn btn-sm btn-outline-danger">Report</button>
+    </form>
+  </div>
+  <div class="col-md-4">
+    <h6>Related Resources</h6>
+    {% for r in related %}
+    <div class="card mb-2 p-2"><a href="{% url 'resource_detail' r.pk %}">{{ r.title }}</a></div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CollegeHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+        .navbar { background: linear-gradient(135deg, #1a1a2e, #16213e) !important; }
+        .navbar-brand { color: #e94560 !important; font-weight: 700; font-size: 1.4rem; }
+        .nav-link { color: #ccc !important; font-size: 0.9rem; }
+        .nav-link:hover { color: #fff !important; }
+        .stat-card { border-radius: 12px; border: none; padding: 1.5rem; text-align: center; }
+        .stat-card .number { font-size: 2rem; font-weight: 700; }
+        .section-title { font-size: 1rem; font-weight: 600; color: #333; margin-bottom: 1rem; border-left: 4px solid #e94560; padding-left: 10px; }
+        .resource-card { border-radius: 10px; border: 1px solid #eee; background: #fff; padding: 1rem 1.2rem; margin-bottom: 0.75rem; transition: box-shadow 0.2s; }
+        .resource-card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .badge-type { font-size: 0.7rem; padding: 3px 8px; border-radius: 20px; }
+        .badge-notes { background: #e3f2fd; color: #1565c0; }
+        .badge-pyq   { background: #fce4ec; color: #c62828; }
+        .badge-book  { background: #e8f5e9; color: #2e7d32; }
+        .badge-important { background: #fff8e1; color: #f57f17; }
+        .request-card { border-radius: 10px; border: 1px solid #eee; background: #fff; padding: 0.8rem 1rem; margin-bottom: 0.6rem; }
+        .sidebar-title { font-size: 0.85rem; font-weight: 600; color: #555; margin-bottom: 0.75rem; }
+        .exam-btn { background: #e94560; border: none; color: white; border-radius: 20px; padding: 5px 18px; font-size: 0.85rem; }
+        .exam-btn:hover { background: #c73652; color: white; }
+        .exit-exam-btn { background: #f0ad4e; border: none; color: white; border-radius: 20px; padding: 5px 18px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg px-4 py-3">
+    <a class="navbar-brand" href="/dashboard/">CollegeHub</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+        <div class="navbar-nav ms-auto gap-2">
+            <a class="nav-link" href="/dashboard/">Dashboard</a>
+            <a class="nav-link" href="/resources/">Browse</a>
+            <a class="nav-link" href="/leaderboard/">Leaderboard</a>
+            <a class="nav-link" href="/requests/">Requests</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container py-4">
+    {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

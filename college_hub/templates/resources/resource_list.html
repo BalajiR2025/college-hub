@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+  <div class="col-md-3">
+    <form method="get">
+      {{ filter.form.as_p }}
+      <button type="submit" class="btn btn-primary w-100">Filter</button>
+      <a href="{% url 'resource_list' %}" class="btn btn-outline-secondary w-100 mt-2">Clear</a>
+    </form>
+  </div>
+  <div class="col-md-9">
+    {% for r in resources %}
+    <div class="card mb-3 p-3">
+      <div class="d-flex justify-content-between">
+        <div>
+          <a href="{% url 'resource_detail' r.pk %}" class="fw-bold text-decoration-none">{{ r.title }}</a>
+          <span class="badge bg-primary ms-2">{{ r.get_type_display }}</span>
+          {% if r.is_important %}<span class="badge bg-warning text-dark ms-1">Important</span>{% endif %}
+        </div>
+        <div class="text-muted small">{{ r.downloads }} downloads</div>
+      </div>
+      <div class="small text-muted mt-1">{{ r.subject }} | by {{ r.uploaded_by.get_full_name }}</div>
+      <div class="small mt-1">Rating: {{ r.avg_rating|floatformat:1 }} / 5</div>
+    </div>{% endfor %}
+    {% include 'partials/pagination.html' %}
+  </div>
+</div>
+{% endblock %}
